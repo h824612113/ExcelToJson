@@ -67,8 +67,6 @@
      <Compile Include="Assets\Scripts\Json\LitJson\Netstandard15Polyfill.cs" />
      <Compile Include="Assets\Scripts\Json\LitJson\ParserToken.cs" />
      <Compile Include="Assets\Scripts\JsonCode\CfgData.cs" />
-     <Compile Include="Assets\Scripts\TestCfg.cs" />
-     <Compile Include="Assets\Scripts\TestJson.cs" />
      <Compile Include="Assets\Utility\StringUtils.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>E:/UnityProj/ExcelToJson/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

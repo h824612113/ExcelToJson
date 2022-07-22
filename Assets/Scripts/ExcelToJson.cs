@@ -224,29 +224,15 @@ public class ExcelToJson : MonoBehaviour
             {
                 int sheetCount = excelPackage.Workbook.Worksheets.Count;
                 Dictionary<string, string> tempJson = new Dictionary<string, string>();//当前json的名字和类型
-                // for (int j = 0; j < sheetCount; j++)
-                // {
-                //     ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[j];
-                //     
-                // }
                 ExcelWorksheets worksheets = excelPackage.Workbook.Worksheets;
-                // string allJsonData = "{/n";
-                // JsonData allJsonData = new JsonData();
-                // string rowData = "";
                 foreach (var worksheet in worksheets)
                 {
                     if (!worksheet.Name.Contains("!"))
                     {
                         continue;
                     }
-                    else
-                    {
-                        // string[] sep = worksheet.Name.Split('!');
-                        // worksheet.Name = sep[1];
-                    }
                     int colCount = worksheet.Dimension.End.Column;
                     int rowCount = worksheet.Dimension.End.Row;
-                    // Debug.Log(""+"-666-表名是---"+worksheet.Name+"--在--"+excelPath+"--下面row==="+rowCount+"---col---"+colCount);
                     if (rowCount < 4)
                     {
                         Debug.Log(""+"--表名是---"+worksheet.Name+"--在--"+excelPath+"--下面的行少于四行");
@@ -282,7 +268,6 @@ public class ExcelToJson : MonoBehaviour
                                 {
                                     text = text.Replace('|', ',');
                                     text = "[" + text + "]";
-                                    Debug.Log("-----|||||-----text--------------"+text);
                                 }
                                 bool isClientPro = false;
                                 if (col != 1 && type.ToLower().Contains("_c"))
@@ -308,11 +293,9 @@ public class ExcelToJson : MonoBehaviour
                                         perRowData[key] =  ParseValue(type, text);    
                                     }
                                     
-                                    Debug.Log("当前的type是"+type+"--内容是"+text);
                                 }
                                 else
                                 {
-                                    Debug.Log("当前的type是"+type+"--内容是"+text);
                                     if (isClientMode)
                                     {
                                         if (isClientPro)
@@ -324,7 +307,6 @@ public class ExcelToJson : MonoBehaviour
                                     {
                                         perRowData[key] =  ParseValue(type, text);   
                                     }
-                                    Debug.Log("rowData-------------------sss"+rowData);
                                     perSheetData.Add(perRowData);
                                 }
                             
@@ -333,23 +315,18 @@ public class ExcelToJson : MonoBehaviour
                             }
                         }
                     }
-
-                    Debug.Log("当前的rowJson----"+rowJson);
+                    
                     if (worksheet.Name.Contains("!"))
                     {
                         string[] sep = worksheet.Name.Split('!');
                         worksheet.Name = sep[1];
                         m_FinalJsonData["Items"][worksheet.Name] = new JsonData();
-                        // m_FinalJsonData[worksheet.Name].SetJsonType(LitJson.JsonType.Array);
                         for (int j = 0; j < perSheetData.Count; j++)
                         {
-                            // allJsonData[worksheet.Name].Add(perSheetData[j]);
                             m_FinalJsonData["Items"][worksheet.Name].Add(perSheetData[j]);
-                            Debug.Log("persheetdata----"+j+"-------------"+perSheetData[j]);
                         }
                         
                         m_AllPropertyDic[worksheet.Name] = tempDic;
-                        
                     }
                     else
                     {
@@ -366,10 +343,10 @@ public class ExcelToJson : MonoBehaviour
         {
             DirectoryInfo directory = new DirectoryInfo(path);
             FileInfo[] files = directory.GetFiles("*.xlsx", SearchOption.AllDirectories);
-            Debug.Log("excel文件的个数为----"+files.Length);
+            // Debug.Log("excel文件的个数为----"+files.Length);
             for (int i = 0; i < files.Length; i++)
             {
-                Debug.Log("当前的excel的名字是-----------"+files[i].Name);
+                // Debug.Log("当前的excel的名字是-----------"+files[i].Name);
                 m_AllExcelName.Add(files[i].Name);
             }
 
@@ -381,9 +358,4 @@ public class ExcelToJson : MonoBehaviour
             return null;
         }
     }
-    
-    //1.读取excel
-    //2.生成excel的json;
-    //3.生成excel的结构类;
-    //4.初始化 赋值 
 }
